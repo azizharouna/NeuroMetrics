@@ -21,7 +21,7 @@ NeuroMetrics offers AI-driven insights into Parkinson's treatment efficacy. Repo
 
 ## 5. Model Development
 - **Feature Selection**: Choose relevant features based on importance.
-- **Model Selection**: Try models like linear regression, decision trees, and neural networks.
+- **Model Selection**: 
 - **Model Validation**: Use cross-validation for performance.
 
 ## 6. Interpretation & Visualization
