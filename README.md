@@ -30,7 +30,7 @@ NeuroMetrics offers AI-driven insights into Parkinson's treatment efficacy. Repo
 
 ## 7. Deployment & Monitoring
 - **API Development**: Convert the model into an API for healthcare systems.
-  ![Architecture Diagram](https://s3.eu-west-3.amazonaws.com/azizmoussa.com/neurometrics.png)
+  ![Architecture Diagram]([https://s3.eu-west-3.amazonaws.com/azizmoussa.com/neurometrics.png])
 
 - **Real-time Monitoring**: Monitor and recalibrate the model.
 
