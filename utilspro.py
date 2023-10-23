@@ -16,6 +16,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
 from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import mean_squared_error
+from collections import Counter
 
 #reading the data 
 # Unzipping the provided dataset
@@ -41,3 +42,30 @@ def execute_notebook(notebook_filename):
 
     with open(notebook_filename, "w", encoding="utf-8") as f:
         nbformat.write(notebook, f)
+
+
+# Helper function to get the three most common
+def three_most_common(lst):
+    count = Counter(lst)
+    most_common = count.most_common(3)
+    return [item[0] for item in most_common]
+
+def info_df(df) : 
+    result = pd.DataFrame({
+        'Column': df.columns,
+        'Dtype': df.dtypes.values,
+        'Null Count': df.isnull().sum().values,
+        #'Non-Null Count': df.count().values,
+        'Unique Count': df.nunique().values,
+        '% Missing': (df.isnull().sum() / len(df) * 100).values,
+        '1st Mode': [three_most_common(df[col])[0] if len(three_most_common(df[col])) > 0 else None for col in df.columns],
+        '2nd Mode': [three_most_common(df[col])[1] if len(three_most_common(df[col])) > 1 else None for col in df.columns],
+        '3rd Mode': [three_most_common(df[col])[2] if len(three_most_common(df[col])) > 2 else None for col in df.columns],
+        #'Mean': data.mean().values,
+        #'Median': data.median().values,
+        #'Min': data.min().values,
+        #'Max': data.max().values,
+        #'Range': (data.max() - data.min()).values,
+        #'Std': data.std().values
+    })
+    return result
