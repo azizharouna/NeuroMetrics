@@ -1,3 +1,4 @@
 data/*
 .venv/*
 lambda_deployment/*
+utilspro.py

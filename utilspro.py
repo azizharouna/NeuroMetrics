@@ -50,22 +50,42 @@ def three_most_common(lst):
     most_common = count.most_common(3)
     return [item[0] for item in most_common]
 
-def info_df(df) : 
+def optimized_info_df_v5(df):
+    # Lists to store results
+    modes_1st = []
+    modes_2nd = []
+    modes_3rd = []
+
+    # Loop through columns and compute modes
+    for col in df.columns:
+        value_counts = df[col].value_counts()
+        top_3 = value_counts.head(3).index.tolist()
+        
+        modes_1st.append(top_3[0] if len(top_3) > 0 else None)
+        modes_2nd.append(top_3[1] if len(top_3) > 1 else None)
+        modes_3rd.append(top_3[2] if len(top_3) > 2 else None)
+
+    # Construct the results DataFrame
     result = pd.DataFrame({
         'Column': df.columns,
         'Dtype': df.dtypes.values,
         'Null Count': df.isnull().sum().values,
-        #'Non-Null Count': df.count().values,
         'Unique Count': df.nunique().values,
         '% Missing': (df.isnull().sum() / len(df) * 100).values,
-        '1st Mode': [three_most_common(df[col])[0] if len(three_most_common(df[col])) > 0 else None for col in df.columns],
-        '2nd Mode': [three_most_common(df[col])[1] if len(three_most_common(df[col])) > 1 else None for col in df.columns],
-        '3rd Mode': [three_most_common(df[col])[2] if len(three_most_common(df[col])) > 2 else None for col in df.columns],
-        #'Mean': data.mean().values,
-        #'Median': data.median().values,
-        #'Min': data.min().values,
-        #'Max': data.max().values,
-        #'Range': (data.max() - data.min()).values,
-        #'Std': data.std().values
+        '1st Mode': modes_1st,
+        '2nd Mode': modes_2nd,
+        '3rd Mode': modes_3rd
     })
+
     return result
+
+
+
+# Function to interpolate UPDRS scores for a single patient's data
+def interpolate_updrs(patient_data):
+    for col in ['updrs_4']:
+        # Interpolate missing values
+        patient_data[col] = patient_data[col].interpolate(method='linear', limit_direction='both')
+        # Round to nearest integer
+        patient_data[col] = patient_data[col].round()
+    return patient_data
