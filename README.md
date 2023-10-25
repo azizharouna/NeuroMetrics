@@ -1,5 +1,5 @@
 # NeuroMetrics
-NeuroMetrics offers AI-driven insights into Parkinson's treatment efficacy. Repository includes preprocessing scripts, ML models, and visualization tools to guide clinical decisions and enhance patient care.
+NeuroMetrics is an AI-driven platform designed to predict the UPDRS 3 score (Motor abilitity deteroriation), a crucial metric in the Unified Parkinson's Disease Rating Scale. The application collects various inputs from users, including UPDRS scores for different stages (except UPDRS 3), time since diagnosis, medication numeric value, a selection from UniProt proteins, and NPX numeric value. Using this data, the platform predicts the UPDRS 3 score, which assesses the progression and severity of Parkinson's disease in motor ability. This capability makes NeuroMetrics particularly valuable for clinicians, researchers, and potentially patients, as predicting UPDRS 3 provides insights into the current state of the disease, aiding in treatment planning and interventions. This repository includes preprocessing scripts, ML models, and a web application to facilitate these predictions and guide clinical decisions
 
 ## 1. Problem Definition
 - **Objective**: Develop an AI product to assess the efficacy of Parkinson's disease treatments using the AMP®PD dataset.
