@@ -219,10 +219,15 @@ def evaluate_model(df, features, target_column='updrs_3'):
     y = df[target_column]
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Scaling the feature columns
+    scaler = StandardScaler()
+    X_train_scaled = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns)
+    X_test_scaled = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns)
     
     model = LinearRegression()
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
+    model.fit(X_train_scaled, y_train)
+    y_pred = model.predict(X_test_scaled)
     
     mse = mean_squared_error(y_test, y_pred)
     mae = mean_absolute_error(y_test, y_pred)
@@ -233,7 +238,7 @@ def evaluate_model(df, features, target_column='updrs_3'):
         'mse': mse,
         'mae': mae,
         'r2': r2
-    }
+    } 
 
 # Perform the iterative process of adding features and evaluating the model
 def iterative_modeling(df, all_features, target_column='updrs_3'):
@@ -264,3 +269,65 @@ def iterative_modeling(df, all_features, target_column='updrs_3'):
 #     print(f"Mean Absolute Error: {metrics['mae']}")
 #     print(f"R-squared: {metrics['r2']}")
 #     print("-------------------------")
+
+
+import pandas as pd
+
+import pandas as pd
+
+def binary_encode(dataframe, column_name):
+    """
+    Perform binary encoding on a specific column of a dataframe.
+    
+    Parameters:
+    - dataframe: Input dataframe
+    - column_name: Name of the column to be binary encoded
+    
+    Returns:
+    - dataframe: Updated dataframe with the binary encoded column
+    """
+    # Convert category to codes
+    dataframe[column_name + "_code"] = dataframe[column_name].astype('category').cat.codes
+    
+    # Convert the codes into binary format
+    max_binary_length = dataframe[column_name + "_code"].max().bit_length()
+    for i in range(max_binary_length):
+        dataframe[column_name + "_bin_" + str(i)] = (dataframe[column_name + "_code"] & (1 << i)) >> i
+    
+    # Drop the original and code columns
+    dataframe = dataframe.drop(columns=[column_name, column_name + "_code"])
+    
+    return dataframe
+
+# Example Usage:
+#df_encoded = binary_encode(clinical_data_sorted_2, 'upd23b_clinical_state_on_medication')
+#print(df_encoded.head())
+
+
+import pandas as pd
+
+def one_hot_encode(dataframe, column_name):
+    """
+    One-hot encode a specified column in a dataframe.
+    
+    Parameters:
+    - dataframe: The input dataframe.
+    - column_name: The name of the column to one-hot encode.
+    
+    Returns:
+    - The dataframe with the one-hot encoded column. Original column is dropped.
+    """
+    # Use pandas' get_dummies function to one-hot encode the column
+    dummies = pd.get_dummies(dataframe[column_name], prefix=column_name)
+    
+    # Drop the original column and concatenate the one-hot encoded columns
+    dataframe = pd.concat([dataframe.drop(column_name, axis=1), dummies], axis=1)
+    
+    return dataframe
+
+# Example Usage:
+# Assuming clinical_data_sorted_2 is the dataframe you're working with
+# encoded_df = one_hot_encode(clinical_data_sorted_2, 'upd23b_clinical_state_on_medication')
+# encoded_df.head()
+
+
