@@ -30,7 +30,7 @@ NeuroMetrics is an AI-driven platform designed to predict the UPDRS 3 score (Mot
 
 ## 7. Deployment & Monitoring
 - **API Development**: Convert the model into an API for healthcare systems. The web application for data input and prediction can be found at [NeuroMetrics Web Application](https://azizmoussa.com/api.html).
-  ![Architecture Diagram](https://s3.eu-west-3.amazonaws.com/azizmoussa.com/neurometrics.png)
+  ![Architecture Diagram](https://s3.eu-west-3.amazonaws.com/azizmoussa.com/neurometrics2.png)
 - **Real-time Monitoring**: Monitor and recalibrate the model based on incoming data.
 
 ## 8. Feedback Loop
